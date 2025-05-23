@@ -1,0 +1,421 @@
+
+/* Global Styles */
+:root {
+    --primary-color: #1A237E; /* Deep Blue */
+    --secondary-color: #00BCD4; /* Teal */
+    --accent-color: #FF9800; /* Orange */
+    --background-color: #F5F5F5; /* Light Gray */
+    --text-color: #333333;
+    --light-text-color: #FFFFFF;
+    --danger-color: #e74c3c;
+    --success-color: #2ecc71;
+    /* --border-radius: 8px; */ /* Use Bootstrap rounded classes */
+    /* --box-shadow: 0 4px 6px rgba(0,0,0,0.1); */ /* Use Bootstrap shadow classes */
+
+    /* Bootstrap overrides */
+    --bs-primary: var(--primary-color);
+    --bs-secondary: var(--secondary-color); /* Using secondary for accent color in Bootstrap context where applicable */
+    --bs-warning: var(--accent-color); /* Using warning for accent color in Bootstrap context */
+    --bs-danger: var(--danger-color);
+    --bs-success: var(--success-color);
+    --bs-body-bg: var(--background-color);
+    --bs-body-color: var(--text-color);
+    --bs-body-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    font-family: var(--bs-body-font-family);
+    margin: 0;
+    background-color: var(--bs-body-bg);
+    color: var(--bs-body-color);
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Bootstrap handles .container */
+
+/* Adjust header for Bootstrap navbar */
+header .container {
+    /* Bootstrap flexbox already handles this */
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8rem;
+     /* Ensure Bootstrap brand link styles don't override h1 */
+     color: var(--light-text-color);
+}
+
+header h1 .fa-gem {
+    margin-right: 10px;
+    color: var(--accent-color); /* Use custom accent color */
+}
+
+/* Navigation styles handled mostly by Bootstrap .navbar-nav .nav-link */
+#main-nav .nav-link {
+     color: rgba(255, 255, 255, 0.75); /* Default Bootstrap navbar-dark color */
+    transition: color 0.3s ease;
+}
+#main-nav .nav-link:hover {
+     color: rgba(255, 255, 255, 1); /* White on hover */
+}
+#main-nav .nav-link:active {
+     color: var(--accent-color); /* Accent color on active/clicked */
+}
+
+
+#main-nav #nav-username-display {
+    /* Bootstrap adds padding/margins to navbar-text */
+    font-style: italic;
+     color: rgba(255, 255, 255, 0.75);
+}
+
+
+/* Main content area, padding handled by Bootstrap container and section padding */
+main {
+    flex-grow: 1;
+    /* padding: 2rem 0; */ /* Removed, let Bootstrap section padding and container handle it */
+}
+
+/* Section styling enhanced by Bootstrap bg-white, p-4, rounded, shadow-sm */
+section h2 {
+    color: var(--primary-color);
+    /* margin-top: 0; */ /* Handled by Bootstrap headings */
+    /* border-bottom: 2px solid var(--secondary-color); */ /* Handled by Bootstrap border-bottom */
+    /* padding-bottom: 0.5rem; */ /* Handled by Bootstrap pb-2 */
+}
+
+footer {
+    background-color: var(--text-color); /* Use custom text color for dark footer background */
+    color: var(--light-text-color);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+/* Footer Wave Support */
+.footer-wave-support {
+    display: flex; /* Use flexbox to align text and image */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    gap: 8px; /* Add some space between text and logo */
+    color: var(--light-text-color); /* Ensure text color is visible on dark background */
+}
+
+.footer-wave-support a {
+    display: flex; /* Allow image to be aligned */
+     color: var(--secondary-color); /* Teal for links in footer */
+    text-decoration: none;
+}
+.footer-wave-support a:hover {
+    color: var(--accent-color); /* Orange on hover */
+}
+
+.wave-logo {
+    height: 20px; /* Adjust height as needed */
+    vertical-align: middle; /* Align image nicely with text */
+    filter: brightness(0) invert(1); /* Make logo white for dark background */
+}
+
+
+/* Specific styling for the landing page actions */
+/* Removed #landing-page-actions - content moved/merged */
+
+
+/* Forms - Mostly handled by Bootstrap form classes (form-label, form-control, form-select, mb-3) */
+/* Removed custom form-group, input, textarea, select styles */
+
+/* Buttons - Mostly handled by Bootstrap btn classes (btn, btn-primary, btn-secondary, btn-danger, btn-sm) */
+/* Removed custom btn styles */
+
+
+/* Google Login Container */
+#google-login-container {
+    /* display: flex; */ /* Use Bootstrap d-flex */
+    /* justify-content: center; */ /* Use Bootstrap justify-content-center */
+    /* margin-top handled by Bootstrap mt-3 in HTML */
+}
+/* Style for the GSI button element itself (optional overrides) */
+/* Removed, Bootstrap classes on container should suffice for centering */
+
+
+
+/* Messages - Use Bootstrap alert classes */
+/* Removed custom message, success, error styles */
+/* JS needs to be updated to use alert, alert-success, alert-danger */
+
+.error-message {
+    /* display: block; */ /* Bootstrap form-text is block by default */
+    color: var(--danger-color); /* Red color for errors */
+    font-size: 0.85rem;
+    margin-top: 0.25rem;
+    min-height: 1em; /* Reserve space even when empty */
+}
+
+#p5-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Behind all content */
+    pointer-events: none; /* Allow clicks/interactions on content above */
+}
+
+#auth-section {
+     max-width: 500px;
+     /* margin: 2rem auto; */ /* Handled by Bootstrap my-4 */
+     text-align: center;
+     /* background-color etc handled by Bootstrap classes */
+}
+#auth-section h2 {
+    text-align: center;
+    /* margin-bottom handled by Bootstrap mb-3 */
+}
+#auth-section p {
+     text-align: center;
+     /* margin-bottom handled by Bootstrap mb-3 */
+     color: #555;
+}
+
+
+/* Apps Grid / Cards - Use Bootstrap Grid System (row, col) and Card Component */
+/* Removed .apps-grid */
+/* Removed .app-card */ /* Styles moved/adapted to Bootstrap .card */
+
+.app-card .app-logo, .app-card .app-logo-placeholder {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    /* border-radius: 10px; */ /* Use Bootstrap rounded-3 */
+    /* margin-bottom: 0.75rem; */ /* Use Bootstrap mb-2/mb-3 */
+    /* align-self: center; */ /* Handled by Bootstrap d-flex justify-content-center */
+}
+.app-card .app-logo-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e0e0e0;
+    color: #757575;
+    font-size: 2rem;
+     /* border-radius: 10px; */ /* Use Bootstrap rounded-3 */
+}
+
+.app-card h3 {
+    /* margin-top: 0; */ /* Handled by Bootstrap h5 */
+    /* margin-bottom: 0.5rem; */ /* Handled by Bootstrap mb-2 */
+    font-size: 1.25rem; /* Keep custom font size if desired */
+    color: var(--primary-color);
+}
+
+.app-card .app-developer {
+    font-size: 0.9rem;
+    color: #555;
+    /* margin-bottom: 0.5rem; */ /* Handled by Bootstrap mb-2 */
+}
+
+.app-card .app-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--accent-color);
+    /* margin-bottom: 0.75rem; */ /* Handled by Bootstrap mb-2 */
+}
+
+.app-card .app-platform {
+    font-size: 0.8rem;
+    /* color: #777; */ /* Handled by Bootstrap badge text color */
+    /* background-color: #f0f0f0; */ /* Handled by Bootstrap badge background color */
+    /* padding: 0.2rem 0.5rem; */ /* Handled by Bootstrap badge padding */
+    /* border-radius: 4px; */ /* Handled by Bootstrap badge border-radius */
+    /* display: inline-block; */ /* Handled by Bootstrap badge */
+    /* margin-bottom: 0.75rem; */ /* Handled by Bootstrap mb-2 */
+}
+
+.app-card p.app-description-short {
+    font-size: 0.9rem;
+    color: #666;
+    flex-grow: 1; /* Makes description take available space */
+    /* margin-bottom: 1rem; */ /* Handled by Bootstrap mb-3 */
+}
+
+.app-card .actions {
+    margin-top: auto; /* Pushes actions to the bottom */
+    display: flex;
+    gap: 0.5rem; /* Keep custom gap or use Bootstrap gx-/gy- */
+    justify-content: flex-end; /* Use Bootstrap justify-content-end */
+}
+.app-card .actions .btn {
+    /* padding and font-size handled by Bootstrap btn-sm */
+}
+
+
+/* Search/Filter Bar - Use Bootstrap flexbox, gap, form-control, form-select */
+.search-filter-bar {
+    /* margin-bottom handled by Bootstrap mb-4 */
+    /* display: flex; */ /* Handled by Bootstrap d-flex */
+    /* gap: 1rem; */ /* Handled by Bootstrap gap-3 */
+    /* flex-wrap: wrap; */ /* Handled by Bootstrap flex-wrap */
+    /* align-items: center; */ /* Handled by Bootstrap align-items-center */
+}
+
+.search-filter-bar input[type="text"],
+.search-filter-bar select {
+    /* flex-grow: 1; */ /* Handled by Bootstrap flex-grow-1 */
+    min-width: 150px; /* Keep minimum width for smaller screens */
+    /* width: 100%; */ /* Handled by Bootstrap form-control/select */
+    /* padding, border, border-radius, box-sizing, font-size handled by Bootstrap form-control/select */
+}
+
+/* Specific styles for showing/hiding file/link inputs */
+.link-file-group {
+    /* Parent container for link and file inputs */
+}
+
+.link-file-group .form-control[type="url"],
+.link-file-group .form-control[type="file"] {
+    /* Ensure both types have consistent styling if needed */
+}
+
+/* Specific styles for showing/hiding file/link inputs */
+.link-file-group {
+    /* Parent container for link and file inputs */
+}
+
+.link-file-group .form-control[type="url"],
+.link-file-group .form-control[type="file"] {
+    /* Ensure both types have consistent styling if needed */
+}
+
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1050; /* Adjust z-index to be higher than Bootstrap navbars */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+     /* Use Bootstrap's backdrop approach potentially? Or keep this custom simple one */
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 25px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 700px;
+    border-radius: 8px; /* Keep custom border-radius for modal content */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+}
+
+.close-btn {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    z-index: 1051; /* Ensure close button is above modal content */
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+#modal-app-content img.app-logo {
+    max-width: 120px;
+    max-height: 120px;
+    border-radius: 15px; /* Keep custom border-radius for modal logo */
+    float: left; /* Keep float for image alongside text */
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+#modal-app-content .app-logo-placeholder.modal-logo-placeholder {
+    width: 120px; /* Adjust size for modal placeholder */
+    height: 120px;
+    border-radius: 15px;
+    float: left;
+    margin-right: 20px;
+    margin-bottom: 10px;
+}
+
+#modal-app-content h2 {
+     color: var(--primary-color);
+     margin-top: 0; /* Reset Bootstrap h2 margin-top */
+}
+#modal-app-content p { margin-bottom: 0.75rem; } /* Keep paragraph spacing */
+#modal-app-content .app-price { font-size: 1.2rem; font-weight: bold; color: var(--accent-color); }
+
+#modal-app-content .app-platform {
+    /* Use Bootstrap badge classes */
+    /* Keep custom background if different from Bootstrap secondary/info/etc. */
+    background-color: var(--secondary-color); /* Teal */
+    color: white;
+    padding: 0.3rem 0.7rem;
+    border-radius: 5px;
+    display: inline-block;
+    margin: 5px 0;
+    margin-right: 10px;
+}
+
+#modal-app-content .app-developer {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.75rem;
+}
+
+#modal-app-content hr {
+    margin: 1.5rem 0; /* Keep custom margin */
+    border: 0;
+    border-top: 1px solid #eee;
+}
+
+.app-downloads {
+    display: flex;
+    gap: 1rem; /* Keep custom gap */
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+}
+
+/* Style for disabled buttons in modal */
+.app-downloads .btn[disabled] {
+    background-color: #ccc;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+
+/* Responsive Design - Bootstrap handles much of this with its grid and navbar breakpoints */
+@media (max-width: 768px) {
+    /* Header adjustments often handled by Bootstrap navbar-toggler and collapse */
+    /* nav items wrapping handled by Bootstrap flex-wrap */
+    /* auth-container, apps-grid handled by Bootstrap classes */
+    .modal-content {
+        width: 95%; /* Slightly wider modal on smaller screens */
+        margin: 15% auto; /* Adjust margin */
+    }
+}
+
+@media (max-width: 480px) {
+    /* header h1 font size handled by Bootstrap rem units */
+    /* btn padding/font size handled by Bootstrap btn-sm */
+     .modal-content {
+        padding: 15px; /* Reduce padding */
+    }
+     #modal-app-content img.app-logo, #modal-app-content .app-logo-placeholder.modal-logo-placeholder {
+         float: none; /* Remove float */
+         display: block; /* Make block element */
+         margin: 0 auto 15px; /* Center and add bottom margin */
+     }
+}
+    

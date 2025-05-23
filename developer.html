@@ -1,0 +1,186 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de bord Développeur - GEODE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Google Identity Services (Nécessaire pour la déconnexion) -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- Chart.js library for analytics visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
+        <div class="container">
+             <a class="navbar-brand" href="index.html">
+                <h1><i class="fas fa-gem"></i> GEODE - Tableau de bord Développeur</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNavbar">
+                 <nav id="main-nav" class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <a class="nav-link" href="index.html" id="nav-home"><i class="fas fa-home"></i> Accueil</a>
+                    <a class="nav-link" href="user.html" id="nav-app-store"><i class="fas fa-store"></i> Place de marché</a>
+                    <a class="nav-link" href="developer.html" id="nav-dev-dashboard"><i class="fas fa-tools"></i> Tableau de bord Développeur</a>
+                    <a class="nav-link" href="profile.html" id="nav-profile"><i class="fas fa-user-circle"></i> Mon Profil</a>
+                    <span id="nav-username-display" class="navbar-text mx-2"></span>
+                    <!-- Login/Register link removed as login is disabled -->
+                    <!-- <a class="nav-link" href="index.html" id="nav-login-register"><i class="fas fa-sign-in-alt"></i> Connexion/Inscription</a> -->
+                    <a class="nav-link" href="#" id="nav-logout"><i class="fas fa-sign-out-alt"></i> Déconnexion</a>
+                    <!-- Navigation elements are static, their display is managed by JS based on login status -->
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <section id="add-app-section" class="bg-white p-4 rounded shadow-sm mb-4">
+            <h2 class="border-bottom pb-2 mb-3"><i class="fas fa-plus-circle"></i> Ajouter une nouvelle application</h2>
+            <form id="add-app-form">
+                <input type="hidden" id="app-id"> <!-- Utilisé pour l'édition -->
+                <div class="mb-3">
+                    <label for="app-name" class="form-label">Nom de l'application</label>
+                    <input type="text" class="form-control" id="app-name" required aria-describedby="app-name-error">
+                    <div class="form-text text-danger error-message" id="app-name-error" aria-live="polite"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="app-description" class="form-label">Description</label>
+                    <textarea class="form-control" id="app-description" rows="4" required aria-describedby="app-description-error"></textarea>
+                    <div class="form-text text-danger error-message" id="app-description-error" aria-live="polite"></div>
+                </div>
+                 <div class="mb-3">
+                    <label for="app-logo-file" class="form-label">Fichier d'image de logo (Optionnel)</label>
+                    <input type="file" class="form-control" id="app-logo-file" accept="image/*" aria-describedby="app-logo-file-error">
+                    <div id="logo-preview-container" class="mt-3">
+                         <!-- Aperçu du nouveau fichier sélectionné ou affichage du logo actuel lors de l'édition -->
+                        <div id="current-logo-display" class="mb-2"></div>
+                        <div id="new-logo-preview" class="mb-2" style="display: none;">
+                            <img src="#" alt="Aperçu du nouveau logo" class="img-thumbnail" style="max-width: 150px; max-height: 150px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <div class="form-text text-danger error-message" id="app-logo-file-error" aria-live="polite"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="app-price" class="form-label">Prix (ex: Gratuit, 9.99$)</label>
+                    <input type="text" class="form-control" id="app-price" required aria-describedby="app-price-error">
+                    <div class="form-text text-danger error-message" id="app-price-error" aria-live="polite"></div>
+                </div>
+                <div class="mb-3">
+                    <label for="app-platform" class="form-label">Plateforme</label>
+                    <select class="form-select" id="app-platform">
+                        <option value="Android">Android</option>
+                        <option value="iOS">iOS</option>
+                        <option value="Both">Android & iOS</option>
+                    </select>
+                </div>
+                <div class="mb-3" id="apk-link-group">
+                    <label for="app-apk-link" class="form-label">Lien APK (pour Android)</label>
+                    <input type="url" class="form-control" id="app-apk-link" placeholder="https://example.com/app.apk" aria-describedby="app-apk-link-error app-apk-link-help">
+                     <div id="app-apk-link-help" class="form-text">Saisissez un lien direct pour le téléchargement.</div>
+                    <div class="form-text text-danger error-message" id="app-apk-link-error" aria-live="polite"></div>
+                </div>
+                 <div class="mb-3" id="apk-file-group" style="display:none;">
+                    <label for="app-apk-file" class="form-label">Fichier APK (pour Android) <span class="text-muted small">(Optionnel)</span></label>
+                    <input type="file" class="form-control" id="app-apk-file" accept=".apk" aria-describedby="app-apk-file-error app-apk-file-help">
+                     <div id="app-apk-file-help" class="form-text">Ou téléchargez le fichier APK directement.</div>
+                    <div class="form-text text-danger error-message" id="app-apk-file-error" aria-live="polite"></div>
+                </div>
+
+                <div class="mb-3" id="ios-link-group">
+                    <label for="app-ios-link" class="form-label">Lien App Store (pour iOS)</label>
+                    <input type="url" class="form-control" id="app-ios-link" placeholder="https://apps.apple.com/app/id12345" aria-describedby="app-ios-link-error app-ios-link-help">
+                     <div id="app-ios-link-help" class="form-text">Saisissez un lien direct pour le téléchargement.</div>
+                    <div class="form-text text-danger error-message" id="app-ios-link-error" aria-live="polite"></div>
+                </div>
+                 <div class="mb-3" id="ios-file-group" style="display:none;">
+                    <label for="app-ios-file" class="form-label">Fichier App iOS (pour iOS) <span class="text-muted small">(Optionnel)</span></label>
+                    <input type="file" class="form-control" id="app-ios-file" accept=".ipa" aria-describedby="app-ios-file-error app-ios-file-help">
+                     <div id="app-ios-file-help" class="form-text">Ou téléchargez le fichier iOS directement.</div>
+                    <div class="form-text text-danger error-message" id="app-ios-file-error" aria-live="polite"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submit-app-btn"><i class="fas fa-plus-circle me-2"></i> Ajouter l'application</button>
+                <button type="button" class="btn btn-secondary ms-2" id="cancel-edit-btn" style="display:none;"><i class="fas fa-times-circle me-2"></i> Annuler l'édition</button>
+            </form>
+            <div id="app-form-message" class="mt-3"></div>
+        </section>
+
+        <section id="my-apps-section" class="bg-white p-4 rounded shadow-sm">
+            <h2 class="border-bottom pb-2 mb-3"><i class="fas fa-list-alt"></i> Mes applications</h2>
+            <div id="developer-apps-list" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                <!-- Les applications seront chargées ici par JavaScript -->
+                <p class="col">Vous n'avez pas encore soumis d'applications.</p> <!-- Default message -->
+            </div>
+        </section>
+
+        <section id="analytics-section" class="bg-white p-4 rounded shadow-sm mt-4">
+            <h2 class="border-bottom pb-2 mb-3"><i class="fas fa-chart-bar"></i> Statistiques et Rapports</h2>
+            <div id="developer-analytics-content" class="row">
+                <!-- Metrics will be loaded here by JavaScript -->
+                <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Applications</h5>
+                            <p id="total-apps-metric" class="card-text fs-1 text-primary">-</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Vues (Simulé)</h5>
+                            <p id="total-views-metric" class="card-text fs-1 text-info">-</p>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-4 mb-3">
+                    <div class="card text-center h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Téléchargements (Simulé)</h5>
+                            <p id="total-downloads-metric" class="card-text fs-1 text-success">-</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Charts will be added here -->
+                <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Vues par Application (Simulé)</h5>
+                            <canvas id="viewsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                 <div class="col-md-6 mb-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Téléchargements par Application (Simulé)</h5>
+                             <canvas id="downloadsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             <div id="analytics-message" class="mt-3"></div>
+        </section>
+    </main>
+
+    <footer class="bg-dark text-white text-center py-3 mt-auto">
+        <div class="container">
+            <p class="mb-1">&copy; 2025 GEODE - Bool AI</p>
+             <p class="mb-0 footer-wave-support">Support via <a href="https://wave.com/" target="_blank" rel="noopener noreferrer"><img src="https://wave.com/static/wave_logo-3e1936278c6458ac38a118137190607e.png" alt="Wave Mobile Money" class="wave-logo"></a></p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGeNKk/ENswOdp+tN9r+brE" crossorigin="anonymous"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/appManager.js"></script>
+    <script src="js/uiHelpers.js"></script>
+    <script src="js/developer-page.js"></script>
+</body>
+</html>
+    
